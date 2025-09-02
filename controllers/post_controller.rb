@@ -1,0 +1,36 @@
+require_relative "../models/post"
+require_relative "../models/user"
+
+class PostController < Sinatra::Base
+  
+  set :views, Proc.new {File.join(root, "../views/post")}
+
+  # Manda pra tela de login se ainda não tiver feito um cadastro
+  # before "/:name" do
+  #   @user = User.where(name: params[:name]).first
+  #   redirect '/login' unless session[:user_id]
+  # end
+
+  # READ
+  get '/:name' do
+    @user = User.where(name: params[:name]).first
+    halt 404, "Usuário não encontrado" unless @user
+
+    @posts = Post.where(user_id: @user.id).all
+    erb :index
+  end
+
+  # CREATE
+  get '/:name/create' do
+    @user = User.where(name: params[:name]).first
+    halt 404, "Usuário não encontrado" unless @user
+
+    erb :create
+  end
+
+  post '/:name/create' do
+    @user = User.where(name: params[:name]).first
+    Post.create(user_id: @user.id ,title: params[:title], content: params[:content])
+    redirect "/#{@user.name}"
+  end
+end

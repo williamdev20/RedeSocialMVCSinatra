@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posts</title>
+</head>
+<body>
+    <h1>Área de Posts</h1>
+    <h2>Posts criados:</h2>
+    <ul>
+        <% @posts.each do |post| %>
+          <li><strong><%=post.title%></strong>: <%=post.content%></li>
+          <button type="button"><a href="">Editar</a></button>
+          <button type="button"><a href="">Deletar</a></button>
+        <% end %>
+    </ul>
+</body>
+</html>
