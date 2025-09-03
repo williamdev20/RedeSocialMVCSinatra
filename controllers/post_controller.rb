@@ -33,4 +33,28 @@ class PostController < Sinatra::Base
     Post.create(user_id: @user.id ,title: params[:title], content: params[:content])
     redirect "/#{@user.name}"
   end
+
+  # UPDATE
+  get '/:name/edit/:id' do
+    @user = User.where(name: params[:name]).first
+    halt 404, "Usuário não encontrado!" unless @user
+
+    @post = Post.where(id: params[:id], user_id: @user.id).first
+    halt 404, "Post não encontrado!" unless @post
+
+    erb :edit
+  end
+
+  # Para usar PUT tem que fazer uma configuração (mesma coisa pro delete)
+  post '/:name/edit/:id' do
+    @user = User.where(name: params[:name]).first
+    halt 404, "Usuário não encontrado!" unless @user
+
+    @post = Post.where(id: params[:id], user_id: @user.id).first
+    halt 404, "Post não encontrado!" unless @post
+
+    @post.update(title: params[:title], content: params[:content])
+    redirect "/#{@user.name}"
+  end
+
 end
