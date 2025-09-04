@@ -57,4 +57,17 @@ class PostController < Sinatra::Base
     redirect "/#{@user.name}"
   end
 
+  # DELETAR
+  delete '/:name/delete/:id' do
+    @user = User.where(name: params[:name]).first
+    halt 404, "Usuário não encontrado!" unless @user
+
+    @post = Post.where(id: params[:id], user_id: @user.id).first
+    halt 404, "Post não encontrado!" unless @post
+
+    @post.delete
+    redirect "/#{@user.name}"
+
+  end
+
 end

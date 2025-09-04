@@ -12,7 +12,10 @@
         <% @posts.each do |post| %>
           <li><strong><%=post.title%></strong>: <%=post.content%></li>
           <button type="button"><a href="<%=@user.name%>/edit/<%=post.id%>">Editar</a></button>
-          <button type="button"><a href="">Deletar</a></button>
+          <form action="<%=@user.name%>/delete/<%=post.id%>" method="post">
+            <input type="hidden" name="_method" value="delete">
+            <button type="submit">Deletar</button>
+          </form>
         <% end %>
     </ul>
 </body>
